@@ -96,7 +96,7 @@ class RealEstatePricePredictorRequest(BaseModel):
     }
 
 
-model = pickle.load(open("/model/model.pkl", "rb"))
+model = pickle.load(open("../../mode/model.pkl", "rb"))
 
 
 @router.post("/predict")
