@@ -1,6 +1,8 @@
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 from starlette import status
+import pickle
+import pandas as pd
 
 
 router = APIRouter()
@@ -94,11 +96,14 @@ class RealEstatePricePredictorRequest(BaseModel):
     }
 
 
-class HousePrice(BaseModel):
-    label: str
-    prediction: int
+model = pickle.load(open("/model/model.pkl", "rb"))
 
 
 @router.post("/predict")
-async def get_home(features: RealEstatePricePredictorRequest, status_code=status.HTTP_200_OK):
-    return {"message": features}
+async def get_home(features: RealEstatePricePredictorRequest, status_code=status.HTTP_204_NO_CONTENT):
+
+    input_data = await features.json()
+
+    input_df = pd.DataFrame([input_data])
+
+    return {"message": input_df}

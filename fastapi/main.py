@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from routers import aiModelRealEstatePredictor
+import pickle
 
 app = FastAPI()
 
-app.include_router(aiModelRealEstatePredictor.router)
+model = pickle.load(open("/model/model.pkl", "rb"))
 
+app.include_router(aiModelRealEstatePredictor.router)
