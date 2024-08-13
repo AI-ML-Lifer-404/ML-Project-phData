@@ -1,7 +1,9 @@
 from fastapi import FastAPI
-from routers import aiModelRealEstatePredictor  # type: ignore
+
+from routers import aiModelRealEstatePredictor, authenticate
 import pickle
-import asyncio
+from .database import engine
+
 
 description = """
 With the Real-Estate House Predictor App, you can locate pinpoint pricing for your next client engagment
@@ -29,8 +31,9 @@ app = FastAPI(title="Real Estate Pricing Predictor ML Model",
               )
 
 
-model = pickle.load(
+model_artifact = pickle.load(
     open("/Users/trentcain/ML-Project-phData/model/model.pkl", "rb"))
 
-
+model.Base.metadata.create_all(bind=engine)
 app.include_router(aiModelRealEstatePredictor.router)
+app.include_router(authenticate.router)

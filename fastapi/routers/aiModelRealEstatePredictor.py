@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 import pickle
 import pandas as pd
 
@@ -60,7 +60,7 @@ with open("/Users/trentcain/ML-Project-phData/model/model.pkl", "rb") as f:
 @router.post("/predict")
 async def predict(features: RealEstatePricePredictorRequest):
 
-    df = pd.DataFrame([features.dict().values()])
+    df = pd.DataFrame([features.model_dump().values()])
 
     pred = model.predict(df)
     return {"pred": int(pred)}
