@@ -1,10 +1,9 @@
 from fastapi import FastAPI
+from database import engine
 
 from routers import aiModelRealEstatePredictor, authenticate
-import pickle
-from database import engine
-import model
 
+import model
 description = """
 With the Real-Estate House Predictor App, you can locate pinpoint pricing for your next client engagment
 #######
@@ -14,6 +13,7 @@ our customers
 
 With the use of Machine Learning, we can deploy rapid scalibity of our API that, that provides seemless predictions
 """
+
 app = FastAPI(title="Real Estate Pricing Predictor ML Model",
               description=description,
               summary="There are some humongous houses in the US. Lets determine the price",
