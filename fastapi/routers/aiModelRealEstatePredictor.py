@@ -54,7 +54,7 @@ class RealEstatePricePredictorRequest(BaseModel):
     }
 
 
-with open("/Users/trentcain/ML-Project-phData/model/model.pkl", "rb") as f:
+with open("/model/model.pkl", "rb") as f:
     model = pickle.load(f)
 
 
