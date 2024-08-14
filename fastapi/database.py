@@ -1,9 +1,14 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
-SQLALCHEMY_DATABASE_URL = "postgresql://avnadmin:AVNS_TkDOgQ4c89kBWqZOhls@phdata-cloudarchitect404.l.aivencloud.com:14635/predictor?sslmode=require"
+DB = os.getenv('DATABASE_URL')
+
+SQLALCHEMY_DATABASE_URL = DB
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 

@@ -12,6 +12,8 @@ from sklearn import pipeline
 from sklearn import preprocessing
 from sklearn.metrics import mean_squared_error, r2_score
 from math import sqrt
+from sklearn.model_selection import GridSearchCV
+
 
 SALES_PATH = "data/kc_house_data.csv"  # path to CSV with home sale data
 # DEMOGRAPHICS_PATH = "data/zipcode_demographics.csv"  # path to CSV with demographics
@@ -64,7 +66,26 @@ def main():
         x, y, random_state=42)
     print(x.columns)
 
-    model = pipeline.make_pipeline(preprocessing.RobustScaler(), neighbors.KNeighborsRegressor()).fit(x_train, y_train)
+    param_grid_knn = {
+        'n_neighbors': [2, 5, 10, 15, 20, 30, 45],
+        'algorithm': ['ball_tree', 'kd_tree', 'brute', 'auto'],
+        'metric': ['minkowski', 'euclidean', 'manhattan', 'chebyshev']
+    }
+
+
+    model = pipeline.make_pipeline(preprocessing.RobustScaler(), neighbors.KNeighborsRegressor())
+    grid = GridSearchCV(model, param_grid_knn, cv=5, n_jobs=-1, verbose=True, refit=True)
+    grid.fit(x_train, y_train)
+    best_knn__model = grid.best_estimator_
+
+    # Print the best hyperparameters
+    print('=========================================[Best Hyperparameters info]=====================================')
+    print(grid.best_params_)
+
+    # summarize best
+    print('Best MAE: %.3f' % grid.best_score_)
+    print('Best Config: %s' % grid.best_params_)
+    print('==========================================================================================================')
     y_pred = model.predict(_x_test)
 
     # Evaluate the model
