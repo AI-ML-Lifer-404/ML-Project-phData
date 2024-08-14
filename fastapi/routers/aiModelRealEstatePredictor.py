@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 import pickle
 import pandas as pd
+import csv
 
 
 router = APIRouter()
@@ -53,7 +54,7 @@ class RealEstatePricePredictorRequest(BaseModel):
     }
 
 
-with open("/model/model.pkl", "rb") as f:
+with open("/Users/trentcain/ML-Project-phData/model/model.pkl", "rb") as f:
     model = pickle.load(f)
 
 

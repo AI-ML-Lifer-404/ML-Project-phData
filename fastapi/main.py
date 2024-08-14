@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from database import engine
 
-from routers import aiModelRealEstatePredictor, auth
+from routers import aiModelRealEstatePredictor, load_csv_to_postgres
 
 import model
 description = """
@@ -32,4 +32,4 @@ app = FastAPI(title="Real Estate Pricing Predictor ML Model",
 
 model.Base.metadata.create_all(bind=engine)
 app.include_router(aiModelRealEstatePredictor.router)
-app.include_router(auth.router)
+app.include_router(load_csv_to_postgres.router)
