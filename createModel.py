@@ -65,7 +65,7 @@ def main():
     print(x.columns)
 
     model = pipeline.make_pipeline(preprocessing.RobustScaler(), neighbors.KNeighborsRegressor()).fit(x_train, y_train)
-    y_pred = neighbors.KNeighborsRegressor.predict(_x_test)
+    y_pred = model.predict(_x_test)
 
     # Evaluate the model
     mse = mean_squared_error(_y_test, y_pred)
